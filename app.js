@@ -24,7 +24,7 @@ app.listen(PORT);
 //  TODO
 //  BROKEN CRUD OPERATIONS WITH MONGODB
 /*
-
+//
 app.get('/newuser', (req, res)=>{
     res.sendFile(newuserPath);
 })
