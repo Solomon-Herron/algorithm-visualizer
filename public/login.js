@@ -29,7 +29,7 @@ welcomebtn.addEventListener("click", async ()=>{
     await new Promise(resolve => setTimeout(() => {resolve()}, 1005));
     document.body.style.backgroundColor = 'var(--main-bg-color)';
     welcomebtn.remove();
-    loginmenu.style.left = '70%';
+    loginmenu.style.left = '75%';
     while(stop){
         await new Promise(resolve => setTimeout(() => {resolve()}, 100));
         let size = i * (Math.random() * 100);
