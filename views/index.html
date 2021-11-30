@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/index.css">
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <title>Algorithm Visualizer</title>
+</head>
+<body>
+    <header>
+        <h1 class="title">Algorithm Visualizer</h1>
+        <p>By Solomon Herron</p>
+    
+        <div class="navbar">
+            <nav>
+                <ul id="nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Sign Out</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <!-- options bar -->
+        <div class="options-bar">
+            <button class="option-button" id="new-array">New array</button>
+
+            <div id="slidecontainer">
+                <p class="slider"># of elements</p>
+                <input type="range" min="10" max="100" value="50" class="slider" id="myRange">
+            </div>
+
+            <!-- sort btns -->
+            <button class="option-button" id="bubblesort-btn">Bubble sort</button>
+            <button class="option-button" id="selectionsort-btn">Selection sort</button>
+            <button class="option-button" id="insertionsort-btn">Insertion sort</button>
+            <button class="option-button" id="quicksort-btn">Quick sort</button>
+            <button class="option-button" id="mergesort-btn" disabled>Merge sort</button>    
+        </div>
+
+        <!-- stage -->
+        <div id="field">
+            <div id="stage"> 
+            </div>
+            <div id="legend">
+                <div id="legend-text"><h1>Legend:</h1></div>
+                <div id="yellowblck">
+                    <div id="yellow"></div> <div id="yellow-text" class="blocktext">The element that is currently being evaluated</div>
+                </div>
+                <div id="drkyellowblck">
+                    <div id="drkyellow"></div> <div id="drkyellow-text" class="blocktext"><p>Position of element after being swapped</p></div>
+                </div>
+                <div id="greyblck">
+                    <div id="grey"></div> <div id="grey-text"class="blocktext"><p>Successfully sorted elements</p></div>
+                </div>
+                <div id="redblck">
+                    <div id="red"></div> <div id="red-text" class="blocktext">Upper boundary of partition</div>
+                </div>
+                <div id="cyanblck">
+                    <div id="cyan"></div> <div id="cyan-text" class="blocktext"><p>Lower boundary of partition</p></div>
+                </div>
+            </div>
+        </div>
+        <div id="errormsg"><h1>Please allow the algorithm demonstration to finish.</h1></div>
+    </div>
+
+    <script src="/public/index.js"></script>
+    
+</body>
+</html>
+

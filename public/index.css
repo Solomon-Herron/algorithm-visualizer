@@ -1,0 +1,314 @@
+:root {
+    --main-bg-color: #2e3047;
+    --second-bg-color: #3c3f58;
+    --third-bg-color: #43455c;
+    --light-grey: #707793;
+    ---mint-green: #3bba9c;
+    --yellow: #FDFD96;
+    --darkyellow: #b1b195;
+    --red: #793434;
+  }
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body, html{
+    background-color: var(--main-bg-color);
+    font-family: 'M PLUS 1 Code', sans-serif;
+    font-family: 'Source Code Pro', monospace;
+}
+
+header{
+    color: var(---mint-green);
+    display: grid;
+    grid-template-columns: [first] auto [line2] 15% [line3] 33% [col4-start] 20% [end];
+    grid-template-rows: [row1-start] 100% [row1-end];
+}
+.title{
+    grid-column-start: first;
+    grid-column-end: line2;
+    font-size: 2.4em;
+    
+}
+header p{
+    color: var(--light-grey);
+    grid-column-start: line2 ;
+    grid-column-end: line3;
+    align-self: flex-end;
+    font-size: 1em;
+    line-height: 30px;
+}
+.navbar{
+   grid-column-start: col4-start ;
+   display: inline;
+}
+ul{
+    list-style-type: none;
+    display: inline;
+    
+}
+li{
+    float:left;
+    padding-left: 30px;
+    margin-top: 5%;
+}
+a{
+    color: inherit;
+    text-decoration: none;
+}
+/* _________________CONTENT_______________ */
+.container{
+ width: 100%;   
+}
+.options-bar{
+    height: 100px;
+    display: grid;
+    grid-template-columns: [newarray] 10% [slider] 15% [gap] 25% [sortbutt1] 10% [sortbutt2] 10% [sortbutt3] 10% [sortbutt4] 10% [sortbutt5] 10%[end];
+}
+
+
+#new-array{
+    grid-column-start: newarray;
+    grid-column-end: slider;
+}
+
+#slidecontainer{
+    grid-column-start: slider;
+    grid-column-end: gap;
+    margin: auto;
+}
+
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 200px;
+    height: 7px;
+    background: var(--light-grey);
+    border-radius: 5px;
+  }
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    background: var(---mint-green);
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #04AA6D;
+    cursor: pointer;
+  }
+.slider {
+    color: var(---mint-green);
+    text-align: center;
+    line-height: 30px;
+}
+#field{
+    display: grid;
+    grid-template-columns: [blankspace] 12% [stage-start] auto [stage-end] 12% [end];
+}
+#stage{
+    
+    grid-column-start: stage-start;
+    grid-column-end: stage-end;
+    height: 500px;
+    display: flex;
+    flex-direction: row;
+}
+/* _______________LEGEND__________________________ */
+#legend{
+    display: grid;
+    grid-template-rows: [start] 15% [yellow-strt] auto [drkyellow-strt] auto [grey-strt] auto  [red-strt] auto [cyan-strt] auto [end];
+    margin-left: 10%;
+}
+#legend-text{
+    grid-row-start: start;
+    grid-row-end: yellow-strt;
+    color:var(--light-grey);
+    padding: 20px;
+    font-weight: bolder;
+}
+.blocktext{
+    width: 50%;
+    margin-left: 5%;
+    color: var(--light-grey);
+    font-weight: bold;
+    font-size: .8em;
+}
+/* items */
+#yellowblck{
+    grid-row-start: yellow-strt;
+    grid-row-end: drkyellow-strt;
+    display: none;
+}
+
+#yellow{
+    background-color: #FDFD96;
+    height: 50px;
+    width: 50px;
+}
+
+/* */
+#drkyellowblck{
+    grid-row-start: drkyellow-strt;
+    grid-row-end: grey-strt;
+    display: none;
+}
+#drkyellow{
+    background-color: var(--darkyellow);
+    height: 50px;
+    width: 50px;
+}
+
+
+/* */
+#greyblck{
+    grid-row-start: grey-strt;
+    grid-row-end: red-strt;
+    display: none;
+}
+#grey{
+    background-color: var(--light-grey);
+    height: 50px;
+    width: 50px;
+}
+/* */
+#redblck{
+    grid-row-start: red-strt;
+    grid-row-end: cyan-strt;
+    display: none;
+}
+#red{
+    background-color: red;
+    height: 50px;
+    width: 50px;
+}
+/* */
+#cyanblck{
+    grid-row-start: cyan-strt;
+    grid-row-end: end;
+    display: none;
+}
+#cyan{
+    background-color: #00FFF4;
+    height: 50px;
+    width: 50px;
+}
+
+
+/* ________________ARRAY_________________ */
+.bar{
+    background-color: var(---mint-green);
+    /* width: .5%; js changes this value depending on # of elements */
+    padding: 5px;
+    margin-inline: auto;
+    /* height: 500px; dynamically allocated by js */
+
+}
+
+.bar.remove{
+    transition: 0.5s ease;
+    opacity: 0 !important;
+}
+
+#div1{
+    height: 200px;
+    width: 200px;
+    background-color: var(--light-grey);
+}
+.appendedbox{
+    background-color: var(---mint-green);
+    width: 50px;
+    height: 50px;
+    margin: auto;
+}
+/* ______________________BUTTONS */
+#bubblesort-btn{
+    grid-column-start: sortbutt1;
+    grid-column-end: sortbutt2;
+}
+#selectionsort-btn{
+    grid-column-start: sortbutt2;
+    grid-column-end: sortbutt3;
+}
+#insertionsort-btn{
+    grid-column-start: sortbutt3;
+    grid-column-end: sortbutt4;
+}
+#quicksort-btn{
+    grid-column-start: sortbutt4;
+    grid-column-end: sortbutt5;
+}
+#mergesort-btn{
+    grid-column-start: sortbutt5;
+    grid-column-end: end;
+}
+
+button{
+    width: 100px;
+    height: 50px;
+    margin: auto;    
+}
+
+
+.option-button {
+  background-color: var(--second-bg-color);
+  border-radius: 4px;
+  border: 0;
+  box-shadow: var(---mint-green) 3px 3px  inset,rgba(0,44,97,.1) 0 3px 6px 0;
+  box-sizing: border-box;
+  color: var(---mint-green);
+  font-size: .8em;
+  font-weight: 700;
+  padding: 5px 20px;
+  position: relative;
+  text-align: center;
+  transition: all .2s cubic-bezier(.22, .61, .36, 1);
+  font-family: 'M PLUS 1 Code', sans-serif;
+font-family: 'Source Code Pro', monospace;
+}
+
+.option-button:hover {
+  background-color: var(---mint-green);
+  color: var(--second-bg-color);
+  transform: translateY(-2px);
+}
+
+
+#errormsg{
+    width: 30em;
+    font-size: .7em;
+    margin: auto;
+    height: auto;
+    background-color: var(--red);
+    color: white;
+    text-align: center;
+    display: block;
+    opacity: 0;
+    transition: opacity 1s;
+    border-radius: 15px 15px;
+    
+}
+/* @media (min-width: 768px) {
+  .option-button {
+    padding: 16px 44px;
+    min-width: 150px;
+  }
+} */
+
+/* _______________________________________________________________________login.css__________________________________________________________________ */
+#welcome-btn{
+    width: 200px;
+    height: 100px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -50px 0 0 -100px;
+    border-radius: 15px 15px;
+    background-color: var(---mint-green);
+}

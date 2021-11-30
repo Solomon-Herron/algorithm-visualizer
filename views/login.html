@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500&family=Source+Code+Pro&display=swap" rel="stylesheet">
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+    <title>Welcome</title>
+
+</head>
+<body>
+    <div id="welcome-btn">WELCOME</div>
+    <div id="bars">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+
+    <div id="login-box">
+        <div class="title">
+            <h1>Algorithm Visualizer</h1>
+            <p>By Solomon Herron</p>
+            <p style="font-size: 10px;">(need more time to complete login functionality)</p>
+        </div>
+        <form  class="validate-form" id="login-form" action="/login" method="post">
+            <div class="wrap-input validate-input m-b-16" data-validate = "Name is required">
+                <label for="username">Username:</label>
+                <input class="form-item topinput" type="text" name="username" id="username" disabled="disabled" >
+            </div>
+            <div class="wrap-input validate-input m-b-16" data-validate = "Name is required" disabled="disabled" >
+                <label for="password">Password:</label>
+                <input  class="form-item topinput"type="password" name="password" id="password" disabled="disabled" >
+            </div>
+            <input id="submitbutton" class="form-item submitbtn" type="submit" value="Login" disabled="disabled" >
+            <input id="newacctbutton" class="form-item submitbtn" type="submit" value="Create Account" disabled="disabled" >
+           
+        </form>
+        <form action="/index" method="get">
+            <input type="submit" class=" form-item submitbtn" name="enter" id="enter" value="Enter the Visualizer">
+        </form>
+    </div>
+    
+    <script src="/public/anime.min.js"></script>
+    <script src="/public/login.js"></script>
+    <script src="/public/validate.js"></script>
+</body>
+</html>
