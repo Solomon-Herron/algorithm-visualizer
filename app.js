@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const port = 3000; 
+const PORT = process.env.PORT || 3000;
 let publicPath = __dirname + '/public';
 let homePath = __dirname + '/views/login.html';
 let newuserPath = __dirname + '/views/newuser.html';
@@ -19,7 +19,7 @@ app.get('/index', (req, res)=>{
     res.sendFile(indexPath);
 })
 
-app.listen(port);
+app.listen(PORT);
 
 //  TODO
 //  BROKEN CRUD OPERATIONS WITH MONGODB
