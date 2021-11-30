@@ -57,7 +57,7 @@ body{
 #login-box{
    position: fixed;
    background-color: var(---mint-green);
-   width: 500px;
+   width: 25vw;
    height: 100%;
    left: 100%;
    transition: left 1s;
