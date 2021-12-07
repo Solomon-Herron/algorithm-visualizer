@@ -49,11 +49,14 @@ This is my DB access set up (I didn't get very far):
 ![code snippit](/docs/brokenLogin.png)
 
 # Road Map
+-Develop a framework for quickly creating elements in the front end that represent different types of data. The app currently uses "bars" in a very cumbersome way. These are sufficient for sorting algorithms not for others, like path-finding algorithms. 
+
 -Classes
 
 -Mobile version
 
 -Backend
+
 
 -Master callback functions
 
