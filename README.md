@@ -1,6 +1,7 @@
-# Algorithm Visualizer
+![logo](/docs/logo.png)
 
-[Live website](http://sherron-algorithm-visualizer.herokuapp.com/)
+[![App](https://img.shields.io/badge/Live%20App-heroku-purple?style=for-the-badge)](http://sherron-algorithm-visualizer.herokuapp.com/)
+
 
 This project is a was created as a means to visualize how certain algorithms work. It should be noted that the intended scope of this project is fairly large, I plan to continue improving it until I graduate university. All of the intended functionality would be impossible to complete within a single semester. 
 
