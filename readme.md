@@ -1,4 +1,4 @@
-![logo](/docs/logo.png)
+# Algorithm Visualizer
 
 This project is a was created as a means to visualize how certain algorithms work. It should be noted that the intended scope of this project is fairly large, I plan to continue improving it until I graduate university. All of the intended functionality would be impossible to complete within a single semester. 
 
@@ -45,15 +45,13 @@ This is my DB access set up (I didn't get very far):
 ![code snippit](/docs/brokenLogin.png)
 
 # Road Map
--Master callback functions
-
 -Classes
 
 -Mobile version
 
 -Backend
 
--Create 'blurbs' in html doc describing the details of how each algortihm works
+-Master callback functions
 
 -Pathfinding algorithms
 
