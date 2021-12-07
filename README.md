@@ -1,4 +1,4 @@
-# Algorithm Visualizer
+![logo](/docs/logo.png)
 
 [Live website](http://sherron-algorithm-visualizer.herokuapp.com/)
 
