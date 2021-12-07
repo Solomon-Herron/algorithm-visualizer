@@ -45,13 +45,15 @@ This is my DB access set up (I didn't get very far):
 ![code snippit](/docs/brokenLogin.png)
 
 # Road Map
+-Master callback functions
+
 -Classes
 
 -Mobile version
 
 -Backend
 
--Master callback functions
+-Create 'blurbs' in html doc describing the details of how each algortihm works
 
 -Pathfinding algorithms
 

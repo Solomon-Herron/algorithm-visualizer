@@ -5,7 +5,7 @@ let bubblesort = document.querySelector('#bubblesort-btn');
 let selectionsort =  document.querySelector('#selectionsort-btn');
 let insertionsort =  document.querySelector('#insertionsort-btn');
 let quicksort = document.querySelector('#quicksort-btn');
-let mergesort = document.querySelecetor('#mergesort-btn');
+let mergesort = document.querySelector('#mergesort-btn');
 
 let errormsg = document.querySelector('#errormsg');
 
@@ -13,8 +13,14 @@ newArraybtn.addEventListener("click", newArray);
 bubblesort.addEventListener("click", bubbleSort);
 selectionsort.addEventListener("click", selectionSort);
 insertionsort.addEventListener("click", insertionSort);
-quicksort.addEventListener("click", async () =>{                                    
+
+// quick sort function is recursive, so some operations need to 
+// be complete prior to calling the sort function, so they aren't 
+// repeatedly executed.  
+quicksort.addEventListener("click", async () =>{  
+    // prevents function from being called if stage isn't populated with an array
     if(stage.children[0] === undefined){ return }
+    // blocks this function from running if another function is already executing
     if(!isRunning){
         document.querySelector('#yellowblck').style.display = 'flex';
         document.querySelector('#drkyellowblck').style.display = 'flex';
@@ -31,11 +37,10 @@ quicksort.addEventListener("click", async () =>{
     }
 });
 
-// mergeSort.addEventListener("click", ()=>{
-//     let 
-// });
 
 slider.addEventListener("mouseup", async ()=>{
+        // blocks this function from running if another function is already executing
+
     if(!isRunning){
         numOfBars = slider.value;
             speed = numOfBars < 25 ? 700 :
@@ -56,10 +61,47 @@ let numOfBars = 50;
 let speed = 100;
 let isRunning = false;
 
+async function newArray(){
+    // blocks this function from running if another function is already executing
+    if(isRunning) {
+        errormsg.style.opacity = '1';
+        await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
+        errormsg.style.opacity = '0';
+        return;
+    }
+    document.querySelector('#yellowblck').style.display = 'none';
+    document.querySelector('#drkyellowblck').style.display = 'none';
+    document.querySelector('#greyblck').style.display = 'none';
+    document.querySelector('#redblck').style.display = 'none';
+    document.querySelector('#cyanblck').style.display = 'none';
+    // delete old array
+    while(stage.firstChild){
+        stage.removeChild(stage.firstChild);
+    }
+    // push new array
+    let newbar = document.createElement('DIV');
+    for(let i = 0; i <= numOfBars; i++){
+        let newbar = document.createElement('DIV');
+        // let allBars = stage.childNodes;
+        // let size = allBars.length;
+        newbar.style.width = numOfBars < 15 ? '5%' : 
+                             numOfBars <= 25 ? '2%' : 
+                             numOfBars <= 50 ? '1%' :
+                             numOfBars <= 75 ? '.08%' : '.05%'; 
+        newbar.style.height = (Math.floor((Math.random() * 400) + 1)) + 'px';
+        newbar.classList.add('bar');
+        stage.appendChild(newbar);
+    }
+}
+
+
+
 
 // SORT FUNCTIONS
 async function bubbleSort(){
+    // prevents function from being called if stage isn't populated with an array
     if(stage.children[0] === undefined){ return }
+    // blocks this function from running if another function is already executing
     if(isRunning) {
         errormsg.style.opacity = '1';
         await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
@@ -72,15 +114,17 @@ async function bubbleSort(){
     document.querySelector('#greyblck').style.display = 'flex';
     document.querySelector('#redblck').style.display = 'flex';
     document.querySelector('#red-text').innerHTML = 'Larger element has been identified';
+    // These values are meant to illustrate the 'bubble' in a bubble sort
     let exampleindex = Math.floor(stage.childNodes.length / 2);
-    // stage.childNodes[2].style.height = '550px';
-    // stage.childNodes[9].style.height = '650px';   // These values are meant to illustrate the 'bubble' in a bubble sort
-    // stage.childNodes[exampleindex].style.height = '650px';
+    stage.childNodes[2].style.height = '425px';
+    stage.childNodes[9].style.height = '450px';   
+    stage.childNodes[exampleindex].style.height = '520px';
+
     let n = stage.childNodes.length;
     for (let i = 0; i < n-1; i++){  // for each array element
-        for(let j = 0; j < n-i-1; j++){  //first run- wjole array,
-            stage.childNodes[j].style.background = "var(--yellow)";
-            if(parseInt(stage.childNodes[j].style.height) > parseInt(stage.childNodes[j + 1].style.height))
+        for(let j = 0; j < n-i-1; j++){                                                                        // cycle through entire array, 
+            stage.childNodes[j].style.background = "var(--yellow)";                                            // once an element of a higher value is evaluated (j+1), 
+            if(parseInt(stage.childNodes[j].style.height) > parseInt(stage.childNodes[j + 1].style.height))    // it is swapped with the current value (j)
             {
                 await new Promise(resolve => setTimeout(() => {resolve()}, speed));
                 swap(stage.childNodes[j + 1], stage.childNodes[j]);
@@ -100,45 +144,16 @@ async function bubbleSort(){
     isRunning = false;
 }
 
-//TODO FINISH MERGE SORT BUTTON
-// async function mergeSort(first, middle, end){
-//     if(stage.children[0] === undefined){ return }
-//     if(isRunning) {
-//         errormsg.style.opacity = '1';
-//         await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
-//         errormsg.style.opacity = '0';
-//         return;
-//     }
-    
-//     isRunning = true;
-//     document.querySelector('#yellowblck').style.display = 'flex';
-//     document.querySelector('#drkyellowblck').style.display = 'flex';
-//     document.querySelector('#greyblck').style.display = 'flex';
-//     document.querySelector('#redblck').style.display = 'flex';
-//     document.querySelector('#red-text').innerHTML = 'Larger element has been identified';
-
-//     let n = stage.childNodes.length;
-//     let middle = (n-1) + 1;
-
-
-// }
-
-
-// async function merge(arr, l ,m){
-
-
-// }
 
 
 async function selectionSort(){
+    // prevents function from being called if stage isn't populated with an array
     if(stage.children[0] === undefined){ return }
+    // blocks this function from running if another function is already executing
     if(isRunning) {
         errormsg.style.opacity = '1';
         await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
         errormsg.style.opacity = '0';
-        return;
-    }
-    if(newArraybtn.addEventListener("click", () => true)){
         return;
     }
     isRunning = true;
@@ -146,12 +161,13 @@ async function selectionSort(){
     document.querySelector('#drkyellowblck').style.display = 'flex';
     document.querySelector('#greyblck').style.display = 'flex';
 
-    let sortedArr = [];
     let minIndex, i, k;
     for(i = 0; i < stage.childNodes.length - 1; i++){
         minIndex = i;
         for(k = i + 1; k < stage.childNodes.length; k++){
-            if(parseInt(stage.childNodes[k].style.height) < parseInt(stage.childNodes[minIndex].style.height)){minIndex = k;} 
+            if(parseInt(stage.childNodes[k].style.height) < parseInt(stage.childNodes[minIndex].style.height)){       // Cycle through entire array, each iteration assigns the value of the   
+                minIndex = k;                                                                                         // smallest element to k... The value of k is then swapped with the value of
+            }                                                                                                         // the element at the END of the SORTED portion of the array. 
         }
         stage.childNodes[minIndex].style.background = "var(--yellow)";
         await new Promise(resolve => setTimeout(() => {resolve()}, speed * 3));
@@ -196,6 +212,10 @@ async function insertionSort(){
     isRunning = false;
 }
 
+
+
+
+
 quickSort = async (low, high) => {
     isRunning = true;
     if(low < high)
@@ -235,11 +255,7 @@ async function partition(low, high){
 
     }
     await new Promise(resolve => setTimeout(() => {resolve()}, speed * 3));
-    swap(stage.childNodes[i + 1], stage.childNodes[high]);
-    // stage.childNodes[i + 1].style.background = "#793434";
-    // await new Promise(resolve => setTimeout(() => {resolve()}, 100));
-    // stage.childNodes[i + 1].style.background = "var(--light-grey)";
-
+    swap(stage.childNodes[i + 1], stage.childNodes[high]);;
     return (i + 1);
 
 }
@@ -259,29 +275,36 @@ function swap(el1, el2){
     el2.style.height = transform1;
 }
 
+//TODO - finish merge sort functionality
 
-function newArray(){
-    document.querySelector('#yellowblck').style.display = 'none';
-    document.querySelector('#drkyellowblck').style.display = 'none';
-    document.querySelector('#greyblck').style.display = 'none';
-    document.querySelector('#redblck').style.display = 'none';
-    document.querySelector('#cyanblck').style.display = 'none';
-    while(stage.firstChild){
-        stage.removeChild(stage.firstChild);
-    }
-    let newbar = document.createElement('DIV');
-    for(let i = 0; i <= numOfBars; i++){
-        let newbar = document.createElement('DIV');
-        // let allBars = stage.childNodes;
-        // let size = allBars.length;
-        newbar.style.width = numOfBars < 15 ? '5%' : 
-                             numOfBars <= 25 ? '2%' : 
-                             numOfBars <= 50 ? '1%' :
-                             numOfBars <= 75 ? '.08%' : '.05%'; 
-        newbar.style.height = (Math.floor((Math.random() * 400) + 1)) + 'px';
-        newbar.classList.add('bar');
-        stage.appendChild(newbar);
-    }
-}
+// mergeSort.addEventListener("click", ()=>{
+//     let 
+// });
+
+// async function mergeSort(first, middle, end){
+//     if(stage.children[0] === undefined){ return }
+//     if(isRunning) {
+//         errormsg.style.opacity = '1';
+//         await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
+//         errormsg.style.opacity = '0';
+//         return;
+//     }
+    
+//     isRunning = true;
+//     document.querySelector('#yellowblck').style.display = 'flex';
+//     document.querySelector('#drkyellowblck').style.display = 'flex';
+//     document.querySelector('#greyblck').style.display = 'flex';
+//     document.querySelector('#redblck').style.display = 'flex';
+//     document.querySelector('#red-text').innerHTML = 'Larger element has been identified';
+
+//     let n = stage.childNodes.length;
+//     let middle = (n-1) + 1;
 
 
+// }
+
+
+// async function merge(arr, l ,m){
+
+
+// }
