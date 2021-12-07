@@ -21,6 +21,13 @@ app.get('/index', (req, res)=>{
 
 app.listen(PORT);
 
+
+
+
+
+
+
+
 //  TODO
 //  BROKEN CRUD OPERATIONS WITH MONGODB
 /*
@@ -64,7 +71,7 @@ app.post('/newuser', (req, res)=>{
         done(null, data)
     })
     } catch(error){
-        console.log("fucking errors again")
+        console.log("uuugggghhhhhh again")
     } 
    
 })

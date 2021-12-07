@@ -1,14 +1,20 @@
 let stage = document.querySelector('#stage');
 let newArraybtn = document.querySelector('#new-array');
-newArraybtn.addEventListener("click", newArray);
+let slider = document.querySelector('#myRange');
 let bubblesort = document.querySelector('#bubblesort-btn');
-bubblesort.addEventListener("click", bubbleSort);
 let selectionsort =  document.querySelector('#selectionsort-btn');
-selectionsort.addEventListener("click", selectionSort);
 let insertionsort =  document.querySelector('#insertionsort-btn');
-insertionsort.addEventListener("click", insertionSort);
 let quicksort = document.querySelector('#quicksort-btn');
-quicksort.addEventListener("click", async () =>{
+let mergesort = document.querySelecetor('#mergesort-btn');
+
+let errormsg = document.querySelector('#errormsg');
+
+newArraybtn.addEventListener("click", newArray);
+bubblesort.addEventListener("click", bubbleSort);
+selectionsort.addEventListener("click", selectionSort);
+insertionsort.addEventListener("click", insertionSort);
+quicksort.addEventListener("click", async () =>{                                    
+    if(stage.children[0] === undefined){ return }
     if(!isRunning){
         document.querySelector('#yellowblck').style.display = 'flex';
         document.querySelector('#drkyellowblck').style.display = 'flex';
@@ -25,9 +31,10 @@ quicksort.addEventListener("click", async () =>{
     }
 });
 
-let slider = document.querySelector('#myRange');
-let numOfBars = 50;
-let speed = 100;
+// mergeSort.addEventListener("click", ()=>{
+//     let 
+// });
+
 slider.addEventListener("mouseup", async ()=>{
     if(!isRunning){
         numOfBars = slider.value;
@@ -43,10 +50,10 @@ slider.addEventListener("mouseup", async ()=>{
         }
 });
 
-// slider.value = 50 then speed = 1;
-// speed = ((slider.value) / 50) * 100; 
 
-let errormsg = document.querySelector('#errormsg');
+
+let numOfBars = 50;
+let speed = 100;
 let isRunning = false;
 
 
@@ -66,9 +73,9 @@ async function bubbleSort(){
     document.querySelector('#redblck').style.display = 'flex';
     document.querySelector('#red-text').innerHTML = 'Larger element has been identified';
     let exampleindex = Math.floor(stage.childNodes.length / 2);
-    stage.childNodes[2].style.height = '550px';
-    stage.childNodes[9].style.height = '650px';   // These values are meant to illustrate the 'bubble' in a bubble sort
-    stage.childNodes[exampleindex].style.height = '650px';
+    // stage.childNodes[2].style.height = '550px';
+    // stage.childNodes[9].style.height = '650px';   // These values are meant to illustrate the 'bubble' in a bubble sort
+    // stage.childNodes[exampleindex].style.height = '650px';
     let n = stage.childNodes.length;
     for (let i = 0; i < n-1; i++){  // for each array element
         for(let j = 0; j < n-i-1; j++){  //first run- wjole array,
@@ -92,6 +99,35 @@ async function bubbleSort(){
     stage.childNodes[0].style.background = "var(--light-grey)";
     isRunning = false;
 }
+
+//TODO FINISH MERGE SORT BUTTON
+// async function mergeSort(first, middle, end){
+//     if(stage.children[0] === undefined){ return }
+//     if(isRunning) {
+//         errormsg.style.opacity = '1';
+//         await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
+//         errormsg.style.opacity = '0';
+//         return;
+//     }
+    
+//     isRunning = true;
+//     document.querySelector('#yellowblck').style.display = 'flex';
+//     document.querySelector('#drkyellowblck').style.display = 'flex';
+//     document.querySelector('#greyblck').style.display = 'flex';
+//     document.querySelector('#redblck').style.display = 'flex';
+//     document.querySelector('#red-text').innerHTML = 'Larger element has been identified';
+
+//     let n = stage.childNodes.length;
+//     let middle = (n-1) + 1;
+
+
+// }
+
+
+// async function merge(arr, l ,m){
+
+
+// }
 
 
 async function selectionSort(){
@@ -161,7 +197,6 @@ async function insertionSort(){
 }
 
 quickSort = async (low, high) => {
-    if(stage.children[0] === undefined){ return }
     isRunning = true;
     if(low < high)
     {
@@ -249,199 +284,4 @@ function newArray(){
     }
 }
 
-function adjustArray(){
-    //for slider
 
-}
-
-// BROKEN, I SUCK AND ANIMATION
-
-// function deleteArrayFadeOut(newArray){
-    // let numNodes = stage.childNodes.length;
-    // if(numNodes < 25){
-    //     deleteTimer = numNodes * 100;
-    //     fadeTimer = 99;
-    // } else if(numNodes > 25 && numNodes < 50) {
-    //     deleteTimer = numNodes * 50;
-    //     fadeTimer = 49;
-    // } else if(numNodes > 50 && numNodes < 75){
-    //     deleteTimer = numNodes * 6;
-    //     fadeTimer = 24;
-    // } else if(numNodes > 75){
-    //     deleteTimer = numNodes * 6;
-    //     fadeTimer = 5;
-    // }
-    // for(let i = 0; i < stage.childNodes.length; i++){ 
-    //     if(stage.childNodes[i].nodeName == 'DIV'){
-    //         setTimeout(function() { 
-    //             stage.childNodes[i].classList.add('remove');
-    //         }, i * fadeTimer ); //summation cannot be greater that set timer 
-    //     }
-    // }
-    // setTimeout(function (){
-    //     while(stage.firstChild){
-    //         stage.removeChild(stage.firstChild);
-    //     }}, deleteTimer);
-  //  newArray;        
-// }
-/*
-(globals)
-let size;
-let array = [];
-let newbarArray = [];
-bar = document.createElement('DIV');
-
-getarraySize(){
-    let slider = document.querySelector('#myRange')
-    slider.addEventListener("mouseup", ()=>{
-        size = slider.value;
-    })
-    int array[size];
-
-}
-create an array in which each index holds a random number from 1 to 500;
-getArray(){
-    int array[size]
-    for(int i = 0; i <= array.length; i++){
-       array.push(math.floor(Math.random(somethingsomething * 500));)
-    }
-    return array;
-}
-
-addEl(size){
-    let newbar = document.createElement('DIV');
-    for(let i = 0; i < array.length; i++){
-        var newbar = document.createElement('DIV');
-        newbar.style.width = size < 15 ? '5%' : 
-                             size <= 25 ? '2%' : 
-                             size <= 50 ? '1%' :
-                             size <= 75 ? '<?%>' :
-                             size > 75 ? '.08%';
-        newbar.style.height = array[i];
-        newbar.classList.add('bar');
-        newbarArray.push(newbar);
-    }
-}
-
-
-
-displaynewArray(){
-    for(var i = 0; i < newbarArray.length; i++ ){
-        stage.appendChild(newbarArray[i]);
-    }
-}
-
-
-
-
-bar = document.createElement('DIV');
-bar.style.height = array[n];
-
-bar.style.width = getarraySize() < 15 || > 25 ? '5%' : 
-                  getarraySize() <= 25 ? '2%' : 
-                  getarraySize() <= 50  ? '1%' : 
-                  getarraySize() > 75 ? '.08%'
-
-FAST DELETE
-
-while(stage.firstChild){
-        stage.removeChild(stage.firstChild);
-    }
-    for(var i = 0; i <= array.length; i++){
-        var trash = array.pop();
-    }
-*/
-
-
-// DO NOT DELETE: DELETE ARRAY WITH FADE OUT *WORKING*
-
-
-
-
-/*________Button definitions____
-
-(****newArraybtn****)
--Calls resetArray
-
-let arraySize = inputRangePosition
-function changeArrSizeSlider(arraySize){
-
-}
-
-
-
-*/
-
-
-/*___ function definitions____
-
-(*****restArray()*******)
-Definition:
-//clear old array, populate new array of n.random number of elements
-
-function resetArray(){
-    
-        while (stage.firstChild) {
-        stage.firstChild.style.transition = "opacity .5s ease";
-        stage.firstChild.style.opacity = 0;
-        stage.removeChild(stage.firstChild);
-
-        getArray();
-        }
-    }
- 
-
-function getArray(arraySize){
-   
-} 
-
-
-*/
-
-
-
-
-
-
-
-
-    // var btn = document.getElementsByClassName("butt");
-    // var box = document.getElementById('div1');
-    // var innerDiv = document.createElement("p");
-    // innerDiv.className = "appendedbox";
-    // btn[0].addEventListener("click", function(){
-    //     box.appendChild(innerDiv);
-    // });
-    // for(let i = 0; i < stage.childNodes.length; i++){ 
-    //     if(stage.childNodes[i].nodeName == 'DIV'){
-    //         setTimeout(function() { 
-    //             stage.childNodes[i].classList.add('remove');
-    //         }, i * 50 );
-    //     }
-    // function bruteSort(){
-    //     let smallerHeight = stage.childNodes[0].style.height;
-    //     let smallerIndex = 0;
-    //     // let temp = stage.childNodes.length - 1;
-    //     // let max = temp.style.height;
-    //     let unsorted = false;
-    //     while(true){
-    //         for(let i = 0; i < stage.childNodes.length; i++){
-    //             if(stage.childNodes[i].style.height < stage.childNodes[smallerIndex].style.height){
-    //                     //smaller               larger
-    //                 swap(stage.childNodes[i], stage.childNodes[smallerIndex]);
-    //                 smallerIndex = i;
-    //             }
-                
-    //         }
-    //         unsorted = false;
-    //         for(let k = 0; k < stage.childNodes.length -1; k++){
-    //             if(stage.childNodes[k].style.height > stage.childNodes[k + 1].style.height){
-    //                 unsorted = true;
-    //             }
-    //         }
-    //         if(unsorted == false){
-    //             break;
-    //         }
-         
-    //     }
-    // }
