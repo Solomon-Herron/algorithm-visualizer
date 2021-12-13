@@ -18,79 +18,69 @@ insertionsort.addEventListener("click", insertionSort);
 // be complete prior to calling the sort function, so they aren't 
 // repeatedly executed.  
 quicksort.addEventListener("click", async () =>{  
-    // prevents function from being called if stage isn't populated with an array
     if(stage.children[0] === undefined){ return }
-    // blocks this function from running if another function is already executing
     if(!isRunning){
-        document.querySelector('#yellowblck').style.display = 'flex';
-        document.querySelector('#drkyellowblck').style.display = 'flex';
-        document.querySelector('#greyblck').style.display = 'flex';
-        document.querySelector('#redblck').style.display = 'flex';
-        document.querySelector('#cyanblck').style.display = 'flex';
+        displayLegend("quickSort");
         let high = stage.childNodes.length - 1;
         await quickSort(0, high);
-    } else{ 
-        errormsg.style.opacity = '1';
-        await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
-        errormsg.style.opacity = '0';
+    } else {
+        displayErrorMessage("isRunning")
         return;
     }
 });
 
 
 slider.addEventListener("mouseup", async ()=>{
-        // blocks this function from running if another function is already executing
-
     if(!isRunning){
         numOfBars = slider.value;
-            speed = numOfBars < 25 ? 700 :
-            numOfBars < 50 ? 500 : 
-            numOfBars < 70 ? 80 : 20;
+        speed = numOfBars < 25 ? 700 :
+                numOfBars < 50 ? 500 : 
+                numOfBars < 70 ? 80 : 20;
         newArray();
     } else {
-        errormsg.style.opacity = '1';
-        await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
-        errormsg.style.opacity = '0';
+        displayErrorMessage("isRunning")
         return;
-        }
+    }
 });
 
 
+// ACTUAL INITIALIZATION VARIABLES
 
 let numOfBars = 50;
+// each sort function needs to know the speed calculated by newArray()
 let speed = 100;
-let isRunning = false;
+// running declared as global so every button in the
+// options bar can access the current 'running' status
+// and block execution accordingly
+let running = false;
+
 
 async function newArray(){
     // blocks this function from running if another function is already executing
-    if(isRunning) {
-        errormsg.style.opacity = '1';
-        await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
-        errormsg.style.opacity = '0';
-        return;
-    }
-    document.querySelector('#yellowblck').style.display = 'none';
-    document.querySelector('#drkyellowblck').style.display = 'none';
-    document.querySelector('#greyblck').style.display = 'none';
-    document.querySelector('#redblck').style.display = 'none';
-    document.querySelector('#cyanblck').style.display = 'none';
-    // delete old array
-    while(stage.firstChild){
-        stage.removeChild(stage.firstChild);
-    }
-    // push new array
-    let newbar = document.createElement('DIV');
-    for(let i = 0; i <= numOfBars; i++){
+    if(!isRunning){
+        displayLegend("newArray");
+
+        // delete old array
+        while(stage.firstChild){
+            stage.removeChild(stage.firstChild);
+        }
+        // push new array
         let newbar = document.createElement('DIV');
-        // let allBars = stage.childNodes;
-        // let size = allBars.length;
-        newbar.style.width = numOfBars < 15 ? '5%' : 
-                             numOfBars <= 25 ? '2%' : 
-                             numOfBars <= 50 ? '1%' :
-                             numOfBars <= 75 ? '.08%' : '.05%'; 
-        newbar.style.height = (Math.floor((Math.random() * 400) + 1)) + 'px';
-        newbar.classList.add('bar');
-        stage.appendChild(newbar);
+        for(let i = 0; i <= numOfBars; i++){
+            let newbar = document.createElement('DIV');
+            // let allBars = stage.childNodes;
+            // let size = allBars.length;
+            newbar.style.width = numOfBars < 15 ? '5%' : 
+                                 numOfBars <= 25 ? '2%' : 
+                                 numOfBars <= 50 ? '1%' :
+                                 numOfBars <= 75 ? '.08%' : '.05%'; 
+            newbar.style.height = (Math.floor((Math.random() * 400) + 1)) + 'px';
+            newbar.classList.add('bar');
+            stage.appendChild(newbar);
+        }
+    } else {
+        displayErrorMessage("isRunning")
+        return;
     }
 }
 
@@ -99,117 +89,109 @@ async function newArray(){
 
 // SORT FUNCTIONS
 async function bubbleSort(){
-    // prevents function from being called if stage isn't populated with an array
     if(stage.children[0] === undefined){ return }
-    // blocks this function from running if another function is already executing
-    if(isRunning) {
-        errormsg.style.opacity = '1';
-        await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
-        errormsg.style.opacity = '0';
+    if(!isRunning()){
+        isRunning = true;
+        displayLegend("bubbleSort");
+
+        // These values are meant to illustrate the 'bubble' in a bubble sort
+        let exampleindex = Math.floor(stage.childNodes.length / 2);
+        stage.childNodes[2].style.height = '425px';
+        stage.childNodes[9].style.height = '450px';   
+        stage.childNodes[exampleindex].style.height = '520px';
+
+          //====Algorithm implementation====
+          let n = stage.childNodes.length;
+          for (let i = 0; i < n-1; i++){  // for each array element
+              for(let j = 0; j < n-i-1; j++){                                                                        // cycle through entire array, 
+                  stage.childNodes[j].style.background = "var(--yellow)";                                            // once an element of a higher value is evaluated (j+1), 
+                  if(parseInt(stage.childNodes[j].style.height) > parseInt(stage.childNodes[j + 1].style.height))    // it is swapped with the current value (j)
+                  {
+                      await new Promise(resolve => setTimeout(() => {resolve()}, speed));
+                      swap(stage.childNodes[j + 1], stage.childNodes[j]);
+                  } else { 
+                      await new Promise(resolve => setTimeout(() => {resolve()}, speed * 2));
+                      stage.childNodes[j + 1].style.background = "red";
+                      await new Promise(resolve => setTimeout(() => {resolve()}, speed * 2));
+                      stage.childNodes[j + 1].style.background = "var(---mint-green)";
+                      await new Promise(resolve => setTimeout(() => {resolve()}, speed * 2));
+                  }
+                  stage.childNodes[j].style.background = "var(---mint-green)";
+                  stage.childNodes[j + 1].style.background = "var(--light-grey)";
+              }
+          }
+          stage.childNodes[0].style.background = "var(--light-grey)";
+          isRunning = false;
+
+    } else {
+        displayErrorMessage("isRunning")
         return;
     }
-    isRunning = true;
-    document.querySelector('#yellowblck').style.display = 'flex';
-    document.querySelector('#drkyellowblck').style.display = 'flex';
-    document.querySelector('#greyblck').style.display = 'flex';
-    document.querySelector('#redblck').style.display = 'flex';
-    document.querySelector('#red-text').innerHTML = 'Larger element has been identified';
-    // These values are meant to illustrate the 'bubble' in a bubble sort
-    let exampleindex = Math.floor(stage.childNodes.length / 2);
-    stage.childNodes[2].style.height = '425px';
-    stage.childNodes[9].style.height = '450px';   
-    stage.childNodes[exampleindex].style.height = '520px';
-
-    let n = stage.childNodes.length;
-    for (let i = 0; i < n-1; i++){  // for each array element
-        for(let j = 0; j < n-i-1; j++){                                                                        // cycle through entire array, 
-            stage.childNodes[j].style.background = "var(--yellow)";                                            // once an element of a higher value is evaluated (j+1), 
-            if(parseInt(stage.childNodes[j].style.height) > parseInt(stage.childNodes[j + 1].style.height))    // it is swapped with the current value (j)
-            {
-                await new Promise(resolve => setTimeout(() => {resolve()}, speed));
-                swap(stage.childNodes[j + 1], stage.childNodes[j]);
-            } else { 
-                await new Promise(resolve => setTimeout(() => {resolve()}, speed * 2));
-                stage.childNodes[j + 1].style.background = "red";
-                await new Promise(resolve => setTimeout(() => {resolve()}, speed * 2));
-                stage.childNodes[j + 1].style.background = "var(---mint-green)";
-                await new Promise(resolve => setTimeout(() => {resolve()}, speed * 2));
-            }
-            stage.childNodes[j].style.background = "var(---mint-green)";
-            stage.childNodes[j + 1].style.background = "var(--light-grey)";
-        }
-        
-    }
-    stage.childNodes[0].style.background = "var(--light-grey)";
-    isRunning = false;
 }
 
 
 
 async function selectionSort(){
-    // prevents function from being called if stage isn't populated with an array
     if(stage.children[0] === undefined){ return }
-    // blocks this function from running if another function is already executing
-    if(isRunning) {
-        errormsg.style.opacity = '1';
-        await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
-        errormsg.style.opacity = '0';
+    if(!isRunning){
+        isRunning = true;
+        displayLegend("selectionSort");
+
+        //====Algorithm implementation====
+          let minIndex, i, k;
+          for(i = 0; i < stage.childNodes.length - 1; i++){
+              minIndex = i;
+              for(k = i + 1; k < stage.childNodes.length; k++){
+                  if(parseInt(stage.childNodes[k].style.height) < parseInt(stage.childNodes[minIndex].style.height)){       // Cycle through entire array, each iteration assigns the value of the   
+                      minIndex = k;                                                                                         // smallest element to k... The value of k is then swapped with the value of
+                  }                                                                                                          // the element at the END of the SORTED portion of the array. 
+              }
+              stage.childNodes[minIndex].style.background = "var(--yellow)";
+              await new Promise(resolve => setTimeout(() => {resolve()}, speed * 3));
+              swap(stage.childNodes[minIndex], stage.childNodes[i]);
+              stage.childNodes[i].style.background = "var(--darkyellow)";
+              await new Promise(resolve => setTimeout(() => {resolve()}, speed));
+              for(let p = 0; p < i; p++){stage.childNodes[p].style.background = "var(--light-grey)";}
+              stage.childNodes[minIndex].style.background = "var(---mint-green)";
+        
+          }
+          stage.childNodes[stage.childNodes.length - 1].style.background = "var(--light-grey)";
+          stage.childNodes[stage.childNodes.length - 2].style.background = "var(--light-grey)";
+          isRunning = false;
+
+    } else {
+        displayErrorMessage("isRunning")
         return;
     }
-    isRunning = true;
-    document.querySelector('#yellowblck').style.display = 'flex';
-    document.querySelector('#drkyellowblck').style.display = 'flex';
-    document.querySelector('#greyblck').style.display = 'flex';
-
-    let minIndex, i, k;
-    for(i = 0; i < stage.childNodes.length - 1; i++){
-        minIndex = i;
-        for(k = i + 1; k < stage.childNodes.length; k++){
-            if(parseInt(stage.childNodes[k].style.height) < parseInt(stage.childNodes[minIndex].style.height)){       // Cycle through entire array, each iteration assigns the value of the   
-                minIndex = k;                                                                                         // smallest element to k... The value of k is then swapped with the value of
-            }                                                                                                         // the element at the END of the SORTED portion of the array. 
-        }
-        stage.childNodes[minIndex].style.background = "var(--yellow)";
-        await new Promise(resolve => setTimeout(() => {resolve()}, speed * 3));
-        swap(stage.childNodes[minIndex], stage.childNodes[i]);
-        stage.childNodes[i].style.background = "var(--darkyellow)";
-        await new Promise(resolve => setTimeout(() => {resolve()}, speed));
-        for(let p = 0; p < i; p++){stage.childNodes[p].style.background = "var(--light-grey)";}
-        stage.childNodes[minIndex].style.background = "var(---mint-green)";
-       
-    }
-    stage.childNodes[stage.childNodes.length - 1].style.background = "var(--light-grey)";
-    stage.childNodes[stage.childNodes.length - 2].style.background = "var(--light-grey)";
-    isRunning = false;
-
 }
 
 async function insertionSort(){
     if(stage.children[0] === undefined){ return }
-    if(isRunning) {
-        errormsg.style.opacity = '1';
-        await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
-        errormsg.style.opacity = '0';
+    if(!isRunning){ 
+        isRunning = true;
+        displayLegend("insertionSort");
+
+          //====Algorithm implementation====
+          let i, key, k;
+          for(i = 1; i < stage.childNodes.length; i++){
+              key = parseInt(stage.childNodes[i].style.height);
+              k = i - 1;
+              while( k >= 0 && parseInt(stage.childNodes[k].style.height) > key)
+              {
+                  stage.childNodes[k + 1].style.background = "var(--yellow)";
+                  await new Promise(resolve => setTimeout(() => {resolve()}, speed));
+                  swap(stage.childNodes[k + 1], stage.childNodes[k])
+                  stage.childNodes[k + 1].style.background = "var(---mint-green)"; 
+                  k -= 1;
+              }
+              stage.childNodes[k + 1].style.height = key;
+           }
+           isRunning = false;
+
+    } else {
+        displayErrorMessage("isRunning")
         return;
     }
-    isRunning = true;
-    document.querySelector('#yellowblck').style.display = 'flex';
-    
-    let i, key, k;
-    for(i = 1; i < stage.childNodes.length; i++){
-        key = parseInt(stage.childNodes[i].style.height);
-        k = i - 1;
-        while( k >= 0 && parseInt(stage.childNodes[k].style.height) > key)
-        {
-            stage.childNodes[k + 1].style.background = "var(--yellow)";
-            await new Promise(resolve => setTimeout(() => {resolve()}, speed));
-            swap(stage.childNodes[k + 1], stage.childNodes[k])
-            stage.childNodes[k + 1].style.background = "var(---mint-green)"; 
-            k -= 1;
-        }
-        stage.childNodes[k + 1].style.height = key;
-    }
-    isRunning = false;
 }
 
 
@@ -273,6 +255,57 @@ function swap(el1, el2){
 
     el1.style.height = transform2;
     el2.style.height = transform1;
+}
+
+
+
+
+function displayLegend(sortFunction){
+    switch(sortFunction){
+        case "bubbleSort":
+            document.querySelector('#yellowblck').style.display = 'flex';
+            document.querySelector('#drkyellowblck').style.display = 'flex';
+            document.querySelector('#greyblck').style.display = 'flex';
+            document.querySelector('#redblck').style.display = 'flex';
+            document.querySelector('#red-text').innerHTML = 'Larger element has been identified';
+            break;
+        case "selectionSort":
+            document.querySelector('#yellowblck').style.display = 'flex';
+            document.querySelector('#drkyellowblck').style.display = 'flex';
+            document.querySelector('#greyblck').style.display = 'flex';
+            break;
+        case "insertionSort":
+            document.querySelector('#yellowblck').style.display = 'flex';
+            break;
+        case "quickSort":
+            document.querySelector('#yellowblck').style.display = 'flex';
+            document.querySelector('#drkyellowblck').style.display = 'flex';
+            document.querySelector('#greyblck').style.display = 'flex';
+            document.querySelector('#redblck').style.display = 'flex';
+            document.querySelector('#cyanblck').style.display = 'flex';
+            break;
+        case "mergeSort":
+            // TODO
+            break;
+        case "newArray":
+            document.querySelector('#yellowblck').style.display = 'none';
+            document.querySelector('#drkyellowblck').style.display = 'none';
+            document.querySelector('#greyblck').style.display = 'none';
+            document.querySelector('#redblck').style.display = 'none';
+            document.querySelector('#cyanblck').style.display = 'none';
+            break;    
+    }
+
+}
+
+async function displayErrorMessage(error){
+    switch(error){
+        case "isRunning":
+            errormsg.style.opacity = '1';
+            await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
+            errormsg.style.opacity = '0';
+            break;
+    }
 }
 
 //TODO - finish merge sort functionality
