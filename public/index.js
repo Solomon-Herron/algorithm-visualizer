@@ -52,11 +52,11 @@ let speed = 100;
 // running declared as global so every button in the
 // options bar can access the current 'running' status
 // and block execution accordingly
-let running = false;
+let isRunning = false;
 
 
 async function newArray(){
-    // blocks this function from running if another function is already executing
+    // blocks this function from running if another function is already executing.
     if(!isRunning){
         displayLegend("newArray");
 
@@ -90,7 +90,7 @@ async function newArray(){
 // SORT FUNCTIONS
 async function bubbleSort(){
     if(stage.children[0] === undefined){ return }
-    if(!isRunning()){
+    if(!isRunning){
         isRunning = true;
         displayLegend("bubbleSort");
 
