@@ -4,7 +4,7 @@
 
 ![Demo](/docs/project-demo.gif)
 
-This project is a was created as a means to visualize how certain algorithms work. It should be noted that the intended scope of this project is fairly large, I plan to continue improving it until I graduate university. All of the intended functionality would be impossible to complete within a single semester. 
+This project is a was created as a means to visualize how certain algorithms work. It should be noted that the intended scope of this project is fairly large, I plan to continue improving it until I graduate university. All of the intended functionality would be impossible to complete within a single semester.. 
 
 **Version 1.4.10**
 ___
@@ -49,14 +49,11 @@ This is my DB access set up (I didn't get very far):
 ![code snippit](/docs/brokenLogin.png)
 
 # Road Map
--Develop a framework for quickly creating elements in the front end that represent different types of data. The app currently uses "bars" in a very cumbersome way. These are sufficient for sorting algorithms not for others, like path-finding algorithms. 
-
 -Classes
 
 -Mobile version
 
 -Backend
-
 
 -Master callback functions
 

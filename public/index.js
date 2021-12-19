@@ -1,34 +1,40 @@
 let stage = document.querySelector('#stage');
-let newArraybtn = document.querySelector('#new-array');
+let getnewArraybtn = document.querySelector('#new-array');
 let slider = document.querySelector('#myRange');
 let bubblesort = document.querySelector('#bubblesort-btn');
 let selectionsort =  document.querySelector('#selectionsort-btn');
 let insertionsort =  document.querySelector('#insertionsort-btn');
 let quicksort = document.querySelector('#quicksort-btn');
 let mergesort = document.querySelector('#mergesort-btn');
-
 let errormsg = document.querySelector('#errormsg');
+// ACTUAL INITIALIZATION VARIABLES
 
-newArraybtn.addEventListener("click", newArray);
+let numOfBars = 50;    
+let speed = 100;        // Declared globally because each sort function needs to know the speed
+                        // calculated by slider's "mouseup" event listener
+
+let isRunning = false;  // running declared as global so every button in the
+                        // options bar can access the current 'running' status
+                        // and block execution accordingly
+
+
+getnewArraybtn.addEventListener("click", getnewArray);
 bubblesort.addEventListener("click", bubbleSort);
 selectionsort.addEventListener("click", selectionSort);
 insertionsort.addEventListener("click", insertionSort);
 
-// quick sort function is recursive, so some operations need to 
-// be complete prior to calling the sort function, so they aren't 
-// repeatedly executed.  
-quicksort.addEventListener("click", async () =>{  
-    if(stage.children[0] === undefined){ return }
-    if(!isRunning){
+quicksort.addEventListener("click", async () =>{        // quick sort function is recursive, so some operations need to 
+    if(stage.children[0] === undefined){ return }       // be complete prior to calling the sort function, so they aren't 
+    if(!isRunning){                                     // repeatedly executed.                   
         displayLegend("quickSort");
         let high = stage.childNodes.length - 1;
-        await quickSort(0, high);
+        let low = 0;
+        await quickSort(low, high);
     } else {
-        displayErrorMessage("isRunning")
+        displayErrorMessage("isRunning");
         return;
     }
 });
-
 
 slider.addEventListener("mouseup", async ()=>{
     if(!isRunning){
@@ -36,7 +42,7 @@ slider.addEventListener("mouseup", async ()=>{
         speed = numOfBars < 25 ? 700 :
                 numOfBars < 50 ? 500 : 
                 numOfBars < 70 ? 80 : 20;
-        newArray();
+        getnewArray();
     } else {
         displayErrorMessage("isRunning")
         return;
@@ -44,46 +50,35 @@ slider.addEventListener("mouseup", async ()=>{
 });
 
 
-// ACTUAL INITIALIZATION VARIABLES
-
-let numOfBars = 50;
-// each sort function needs to know the speed calculated by newArray()
-let speed = 100;
-// running declared as global so every button in the
-// options bar can access the current 'running' status
-// and block execution accordingly
-let isRunning = false;
 
 
-async function newArray(){
-    // blocks this function from running if another function is already executing.
+// == SORT FUNCTIONS == 
+
+async function getnewArray(){
     if(!isRunning){
-        displayLegend("newArray");
+        displayLegend("getnewArray");
 
         // delete old array
         while(stage.firstChild){
             stage.removeChild(stage.firstChild);
         }
         // push new array
-        let newbar = document.createElement('DIV');
         for(let i = 0; i <= numOfBars; i++){
-            let newbar = document.createElement('DIV');
-            // let allBars = stage.childNodes;
-            // let size = allBars.length;
-            newbar.style.width = numOfBars < 15 ? '5%' : 
+            let newBar = document.createElement('DIV');
+            newBar.style.width = numOfBars < 15 ? '5%' : 
                                  numOfBars <= 25 ? '2%' : 
                                  numOfBars <= 50 ? '1%' :
                                  numOfBars <= 75 ? '.08%' : '.05%'; 
-            newbar.style.height = (Math.floor((Math.random() * 400) + 1)) + 'px';
-            newbar.classList.add('bar');
-            stage.appendChild(newbar);
+            newBar.style.height = (Math.floor((Math.random() * 400) + 1)) + 'px';
+            newBar.classList.add('bar');
+            stage.appendChild(newBar);
         }
+
     } else {
         displayErrorMessage("isRunning")
         return;
     }
 }
-
 
 
 
@@ -146,9 +141,12 @@ async function selectionSort(){
                       minIndex = k;                                                                                         // smallest element to k... The value of k is then swapped with the value of
                   }                                                                                                          // the element at the END of the SORTED portion of the array. 
               }
+
               stage.childNodes[minIndex].style.background = "var(--yellow)";
               await new Promise(resolve => setTimeout(() => {resolve()}, speed * 3));
+
               swap(stage.childNodes[minIndex], stage.childNodes[i]);
+
               stage.childNodes[i].style.background = "var(--darkyellow)";
               await new Promise(resolve => setTimeout(() => {resolve()}, speed));
               for(let p = 0; p < i; p++){stage.childNodes[p].style.background = "var(--light-grey)";}
@@ -257,6 +255,12 @@ function swap(el1, el2){
     el2.style.height = transform1;
 }
 
+async function changeElementColor(element, color, hasAnimation, animSpeedMagnifier){
+    stage.childNodes[element].style.background = color;
+    if(hasAnimation){
+        await new Promise(resolve => setTimeout(() => {resolve()}, speed * animSpeedMagnifier));
+    }
+}
 
 
 
@@ -287,7 +291,7 @@ function displayLegend(sortFunction){
         case "mergeSort":
             // TODO
             break;
-        case "newArray":
+        case "getnewArray":
             document.querySelector('#yellowblck').style.display = 'none';
             document.querySelector('#drkyellowblck').style.display = 'none';
             document.querySelector('#greyblck').style.display = 'none';

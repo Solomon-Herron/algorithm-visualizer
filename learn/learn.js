@@ -1,10 +1,21 @@
-function greet(name){
-    alert('Hello ' + name);
+class Algorithm {
+    constructor(algo, runningStatus){
+        this.algo = algo;
+        this.runningStatus = runningStatus;
+    }
+}
+let bubble = new Algorithm(() => {
+    console.log("works");
+}, false);
+
+bubble.algo();
+
+//=======================
+//=======================
+class Rectangle {
+    constructor(){
+        console.log("the rectangle is being created");
+    }
 }
 
-function processUserInput(callback){
-    let name = prompt('Please enter your name.');
-    callback(name);  
-}
-
-processUserInput(greet);
+let box = new Rectangle();
