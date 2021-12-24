@@ -19,3 +19,16 @@ class Rectangle {
 }
 
 let box = new Rectangle();
+
+//========================
+//========================
+let high = 9;
+
+changeElementColor(high, "red", true );
+
+async function changeElementColor(element, color, hasAnimation, animSpeedMagnifier){
+    console.log(high);
+    if(hasAnimation){
+       console.log(animSpeedMagnifier);
+    }
+}

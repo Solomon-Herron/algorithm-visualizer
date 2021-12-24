@@ -1,3 +1,4 @@
+//==DOM OBJECTS==
 let stage = document.querySelector('#stage');
 let getnewArraybtn = document.querySelector('#new-array');
 let slider = document.querySelector('#myRange');
@@ -7,25 +8,31 @@ let insertionsort =  document.querySelector('#insertionsort-btn');
 let quicksort = document.querySelector('#quicksort-btn');
 let mergesort = document.querySelector('#mergesort-btn');
 let errormsg = document.querySelector('#errormsg');
-// ACTUAL INITIALIZATION VARIABLES
-
-let numOfBars = 50;    
-let speed = 100;        // Declared globally because each sort function needs to know the speed
-                        // calculated by slider's "mouseup" event listener
-
-let isRunning = false;  // running declared as global so every button in the
-                        // options bar can access the current 'running' status
-                        // and block execution accordingly
 
 
+//==ACTUAL INITIALIZATION VARIABLES==
+let yellow = "var(--yellow)"; 
+let mintGreen = "var(---mint-green)";  
+let lightGrey = "var(--light-grey)";     
+let darkYellow = "var(--darkyellow)";
+// isRunning declared as global so every button in the
+// options bar can access the current 'running' status
+// and block their own execution accordingly
+let isRunning = false;
+let numOfBars = 50; 
+
+
+//==EVENT LISTENERS==
 getnewArraybtn.addEventListener("click", getnewArray);
 bubblesort.addEventListener("click", bubbleSort);
 selectionsort.addEventListener("click", selectionSort);
 insertionsort.addEventListener("click", insertionSort);
-
-quicksort.addEventListener("click", async () =>{        // quick sort function is recursive, so some operations need to 
-    if(stage.children[0] === undefined){ return }       // be complete prior to calling the sort function, so they aren't 
-    if(!isRunning){                                     // repeatedly executed.                   
+// quick sort function is recursive, so some operations need to
+// be complete prior to calling the sort function, so they aren't
+// repeatedly executed.
+quicksort.addEventListener("click", async () =>{         
+    if(stage.children[0] === undefined){ return }        
+    if(!isRunning){                                                        
         displayLegend("quickSort");
         let high = stage.childNodes.length - 1;
         let low = 0;
@@ -35,13 +42,15 @@ quicksort.addEventListener("click", async () =>{        // quick sort function i
         return;
     }
 });
-
+// animSpeed initialized globally because each sort function needs to know
+// the animation animSpeed, which is calculated by slider "mouseup" event listener    
+let animSpeed = 100; 
 slider.addEventListener("mouseup", async ()=>{
     if(!isRunning){
         numOfBars = slider.value;
-        speed = numOfBars < 25 ? 700 :
-                numOfBars < 50 ? 500 : 
-                numOfBars < 70 ? 80 : 20;
+        animSpeed = numOfBars < 25 ? 700 :
+                    numOfBars < 50 ? 500 : 
+                    numOfBars < 70 ? 80 : 20;
         getnewArray();
     } else {
         displayErrorMessage("isRunning")
@@ -52,40 +61,10 @@ slider.addEventListener("mouseup", async ()=>{
 
 
 
-// == SORT FUNCTIONS == 
-
-async function getnewArray(){
-    if(!isRunning){
-        displayLegend("getnewArray");
-
-        // delete old array
-        while(stage.firstChild){
-            stage.removeChild(stage.firstChild);
-        }
-        // push new array
-        for(let i = 0; i <= numOfBars; i++){
-            let newBar = document.createElement('DIV');
-            newBar.style.width = numOfBars < 15 ? '5%' : 
-                                 numOfBars <= 25 ? '2%' : 
-                                 numOfBars <= 50 ? '1%' :
-                                 numOfBars <= 75 ? '.08%' : '.05%'; 
-            newBar.style.height = (Math.floor((Math.random() * 400) + 1)) + 'px';
-            newBar.classList.add('bar');
-            stage.appendChild(newBar);
-        }
-
-    } else {
-        displayErrorMessage("isRunning")
-        return;
-    }
-}
-
-
-
-// SORT FUNCTIONS
+//==SORT FUNCTIONS== 
 async function bubbleSort(){
-    if(stage.children[0] === undefined){ return }
-    if(!isRunning){
+    if(stage.children[0] === undefined){ return }  
+    if(!isRunning){ 
         isRunning = true;
         displayLegend("bubbleSort");
 
@@ -98,24 +77,25 @@ async function bubbleSort(){
           //====Algorithm implementation====
           let n = stage.childNodes.length;
           for (let i = 0; i < n-1; i++){  // for each array element
-              for(let j = 0; j < n-i-1; j++){                                                                        // cycle through entire array, 
-                  stage.childNodes[j].style.background = "var(--yellow)";                                            // once an element of a higher value is evaluated (j+1), 
-                  if(parseInt(stage.childNodes[j].style.height) > parseInt(stage.childNodes[j + 1].style.height))    // it is swapped with the current value (j)
+              for(let j = 0; j < n-i-1; j++){       
+                  let nextEl = j + 1;                                                                 // cycle through entire array, 
+                  changeElementColor(j, yellow);                                           // once an element of a higher value is evaluated (j+1), 
+                  if(parseInt(stage.childNodes[j].style.height) > parseInt(stage.childNodes[nextEl].style.height))    // it is swapped with the current value (j)
                   {
-                      await new Promise(resolve => setTimeout(() => {resolve()}, speed));
-                      swap(stage.childNodes[j + 1], stage.childNodes[j]);
+                      await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed));
+                      swap(stage.childNodes[nextEl], stage.childNodes[j]);
                   } else { 
-                      await new Promise(resolve => setTimeout(() => {resolve()}, speed * 2));
-                      stage.childNodes[j + 1].style.background = "red";
-                      await new Promise(resolve => setTimeout(() => {resolve()}, speed * 2));
-                      stage.childNodes[j + 1].style.background = "var(---mint-green)";
-                      await new Promise(resolve => setTimeout(() => {resolve()}, speed * 2));
+                    await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed * 2));
+                    changeElementColor(nextEl, "red");
+                    await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed * 2));
+                    changeElementColor(nextEl, mintGreen);
+                    await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed * 2));
                   }
-                  stage.childNodes[j].style.background = "var(---mint-green)";
-                  stage.childNodes[j + 1].style.background = "var(--light-grey)";
+                  changeElementColor(j, mintGreen);
+                  changeElementColor(nextEl, lightGrey);
               }
           }
-          stage.childNodes[0].style.background = "var(--light-grey)";
+          changeElementColor(0, lightGrey);
           isRunning = false;
 
     } else {
@@ -140,21 +120,21 @@ async function selectionSort(){
                   if(parseInt(stage.childNodes[k].style.height) < parseInt(stage.childNodes[minIndex].style.height)){       // Cycle through entire array, each iteration assigns the value of the   
                       minIndex = k;                                                                                         // smallest element to k... The value of k is then swapped with the value of
                   }                                                                                                          // the element at the END of the SORTED portion of the array. 
-              }
-
-              stage.childNodes[minIndex].style.background = "var(--yellow)";
-              await new Promise(resolve => setTimeout(() => {resolve()}, speed * 3));
-
+              } 
+              changeElementColor(minIndex, yellow);
+              await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed * 3));
               swap(stage.childNodes[minIndex], stage.childNodes[i]);
-
-              stage.childNodes[i].style.background = "var(--darkyellow)";
-              await new Promise(resolve => setTimeout(() => {resolve()}, speed));
-              for(let p = 0; p < i; p++){stage.childNodes[p].style.background = "var(--light-grey)";}
-              stage.childNodes[minIndex].style.background = "var(---mint-green)";
+              changeElementColor(i, darkYellow);
+              await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed));
+              
+              for(let p = 0; p < i; p++){
+                  changeElementColor(p, lightGrey);
+                }
+              changeElementColor(minIndex, mintGreen);
         
           }
-          stage.childNodes[stage.childNodes.length - 1].style.background = "var(--light-grey)";
-          stage.childNodes[stage.childNodes.length - 2].style.background = "var(--light-grey)";
+          stage.childNodes[stage.childNodes.length - 1].style.background = lightGrey;
+          stage.childNodes[stage.childNodes.length - 2].style.background = lightGrey;
           isRunning = false;
 
     } else {
@@ -170,16 +150,18 @@ async function insertionSort(){
         displayLegend("insertionSort");
 
           //====Algorithm implementation====
-          let i, key, k;
+          let i, key, k, smallestEl;
           for(i = 1; i < stage.childNodes.length; i++){
               key = parseInt(stage.childNodes[i].style.height);
               k = i - 1;
+              
               while( k >= 0 && parseInt(stage.childNodes[k].style.height) > key)
               {
-                  stage.childNodes[k + 1].style.background = "var(--yellow)";
-                  await new Promise(resolve => setTimeout(() => {resolve()}, speed));
-                  swap(stage.childNodes[k + 1], stage.childNodes[k])
-                  stage.childNodes[k + 1].style.background = "var(---mint-green)"; 
+                  smallestEl = k + 1; 
+                  changeElementColor(smallestEl, yellow);
+                  await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed));
+                  swap(stage.childNodes[smallestEl], stage.childNodes[k])
+                  changeElementColor(smallestEl, mintGreen);
                   k -= 1;
               }
               stage.childNodes[k + 1].style.height = key;
@@ -216,25 +198,25 @@ async function partition(low, high){
         //on each pass, a section of the array is traversed,
         //any element shorter in height than pivot (on first pass this is [n-1])
         //is moved to the beginning of the array.
-        stage.childNodes[high].style.background = "red";
-        stage.childNodes[low].style.background = "#00FFF4"; //bright blue
+        changeElementColor(high, "red");
+        changeElementColor(low, "#00FFF4");
         if(parseInt(stage.childNodes[j].style.height) < pivot){ 
             //for every element smaller than the pivot, i increases by 1   
             i++;
-            stage.childNodes[j].style.background = "var(--yellow)"; //yellow
-            await new Promise(resolve => setTimeout(() => {resolve()}, speed * 3));
+            changeElementColor(j, yellow);
+            await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed * 3));
             swap(stage.childNodes[i], stage.childNodes[j]);
-            stage.childNodes[i].style.background = "var(--darkyellow)"; //greyellow
-            await new Promise(resolve => setTimeout(() => {resolve()}, speed));
-            stage.childNodes[i].style.background = "var(---mint-green)"; //gren
-            stage.childNodes[j].style.background = "var(---mint-green)"; //yellow
+            changeElementColor(i, darkYellow);
+            await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed));
+            changeElementColor(i, mintGreen);
+            changeElementColor(j, mintGreen);
         }
-        stage.childNodes[high].style.background = "var(---mint-green)"; //green
-        stage.childNodes[low].style.background = "var(---mint-green)"; //bright blue
+        changeElementColor(high, mintGreen); //green
+        changeElementColor(low, mintGreen);
 
 
     }
-    await new Promise(resolve => setTimeout(() => {resolve()}, speed * 3));
+    await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed * 3));
     swap(stage.childNodes[i + 1], stage.childNodes[high]);;
     return (i + 1);
 
@@ -255,13 +237,9 @@ function swap(el1, el2){
     el2.style.height = transform1;
 }
 
-async function changeElementColor(element, color, hasAnimation, animSpeedMagnifier){
+ function changeElementColor(element, color){
     stage.childNodes[element].style.background = color;
-    if(hasAnimation){
-        await new Promise(resolve => setTimeout(() => {resolve()}, speed * animSpeedMagnifier));
-    }
 }
-
 
 
 function displayLegend(sortFunction){
@@ -312,6 +290,32 @@ async function displayErrorMessage(error){
     }
 }
 
+async function getnewArray(){
+    if(!isRunning){
+        displayLegend("getnewArray");
+
+        // delete old array
+        while(stage.firstChild){
+            stage.removeChild(stage.firstChild);
+        }
+        // push new array
+        for(let i = 0; i <= numOfBars; i++){
+            let newBar = document.createElement('DIV');
+            newBar.style.width = numOfBars < 15 ? '5%' : 
+                                 numOfBars <= 25 ? '2%' : 
+                                 numOfBars <= 50 ? '1%' :
+                                 numOfBars <= 75 ? '.08%' : '.05%'; 
+            newBar.style.height = (Math.floor((Math.random() * 400) + 1)) + 'px';
+            newBar.classList.add('bar');
+            stage.appendChild(newBar);
+        }
+
+    } else {
+        displayErrorMessage("isRunning")
+        return;
+    }
+}
+
 //TODO - finish merge sort functionality
 
 // mergeSort.addEventListener("click", ()=>{
@@ -337,11 +341,3 @@ async function displayErrorMessage(error){
 //     let n = stage.childNodes.length;
 //     let middle = (n-1) + 1;
 
-
-// }
-
-
-// async function merge(arr, l ,m){
-
-
-// }
