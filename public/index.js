@@ -1,5 +1,6 @@
 //==DOM OBJECTS==
 let stage = document.querySelector('#stage');
+let array = stage.childNodes;
 let getnewArraybtn = document.querySelector('#new-array');
 let slider = document.querySelector('#myRange');
 let bubblesort = document.querySelector('#bubblesort-btn');
@@ -60,8 +61,13 @@ slider.addEventListener("mouseup", async ()=>{
 
 
 
+//====================
 
-//==SORT FUNCTIONS== 
+//===SORT FUNCTIONS=== 
+
+//====================
+
+
 async function bubbleSort(){
     if(stage.children[0] === undefined){ return }  
     if(!isRunning){ 
@@ -69,35 +75,35 @@ async function bubbleSort(){
         displayLegend("bubbleSort");
 
         // These values are meant to illustrate the 'bubble' in a bubble sort
-        let exampleindex = Math.floor(stage.childNodes.length / 2);
-        stage.childNodes[2].style.height = '425px';
-        stage.childNodes[9].style.height = '450px';   
-        stage.childNodes[exampleindex].style.height = '520px';
+        array[2].style.height = '425px';
+        array[9].style.height = '450px';   
+        let exampleindex = Math.floor(array.length / 2);
+        array[exampleindex].style.height = '520px';
 
           //====Algorithm implementation====
-          let n = stage.childNodes.length;
+          let n = array.length;
           for (let i = 0; i < n-1; i++){  // for each array element
               for(let j = 0; j < n-i-1; j++){       
-                  let nextEl = j + 1;                                                                 // cycle through entire array, 
+                  let nextEl = j + 1;
+                  let jHeight = parseInt(array[j].style.height);
+                  let nextElHeight = parseInt(array[nextEl].style.height);                                                                 // cycle through entire array, 
                   changeElementColor(j, yellow);                                           // once an element of a higher value is evaluated (j+1), 
-                  if(parseInt(stage.childNodes[j].style.height) > parseInt(stage.childNodes[nextEl].style.height))    // it is swapped with the current value (j)
-                  {
-                      await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed));
-                      swap(stage.childNodes[nextEl], stage.childNodes[j]);
-                  } else { 
-                    await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed * 2));
-                    changeElementColor(nextEl, "red");
-                    await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed * 2));
-                    changeElementColor(nextEl, mintGreen);
-                    await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed * 2));
-                  }
+                  
+                  if( jHeight > nextElHeight ){                                             // it is swapped with the current value (j)
+                      await pauseAnimation(animSpeed);
+                      swap(array[nextEl], array[j]);                  
+                    } else { 
+                    await pauseAnimation(animSpeed * 2);
+                    await changeElementColor(nextEl, "red", true, 2);
+                    await changeElementColor(nextEl, mintGreen, true, 2);
+                   }
+
                   changeElementColor(j, mintGreen);
                   changeElementColor(nextEl, lightGrey);
               }
           }
           changeElementColor(0, lightGrey);
           isRunning = false;
-
     } else {
         displayErrorMessage("isRunning")
         return;
@@ -113,28 +119,30 @@ async function selectionSort(){
         displayLegend("selectionSort");
 
         //====Algorithm implementation====
-          let minIndex, i, k;
-          for(i = 0; i < stage.childNodes.length - 1; i++){
-              minIndex = i;
-              for(k = i + 1; k < stage.childNodes.length; k++){
-                  if(parseInt(stage.childNodes[k].style.height) < parseInt(stage.childNodes[minIndex].style.height)){       // Cycle through entire array, each iteration assigns the value of the   
-                      minIndex = k;                                                                                         // smallest element to k... The value of k is then swapped with the value of
-                  }                                                                                                          // the element at the END of the SORTED portion of the array. 
+          let indexOfMin, i, k;
+          for(i = 0; i < array.length - 1; i++){
+              indexOfMin = i;
+              
+              for(k = i + 1; k < array.length; k++){
+                  let kHeight = parseInt(array[k].style.height);
+                  let indexOfMinHeight = parseInt(array[indexOfMin].style.height);
+                  if( kHeight < indexOfMinHeight){                                      // Cycle through entire array, each iteration assigns the value of the   
+                      indexOfMin = k;                                                   // smallest element to k... The value of k is then swapped with the value of
+                  }                                                                     // the element at the END of the SORTED portion of the array. 
               } 
-              changeElementColor(minIndex, yellow);
-              await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed * 3));
-              swap(stage.childNodes[minIndex], stage.childNodes[i]);
-              changeElementColor(i, darkYellow);
-              await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed));
+
+              changeElementColor(indexOfMin, yellow, true, 3);
+              swap(array[indexOfMin], array[i]);
+              changeElementColor(i, darkYellow, true, 1);
               
               for(let p = 0; p < i; p++){
                   changeElementColor(p, lightGrey);
-                }
-              changeElementColor(minIndex, mintGreen);
+              }
+              changeElementColor(indexOfMin, mintGreen);
         
           }
-          stage.childNodes[stage.childNodes.length - 1].style.background = lightGrey;
-          stage.childNodes[stage.childNodes.length - 2].style.background = lightGrey;
+          array[array.length - 1].style.background = lightGrey;
+          array[array.length - 2].style.background = lightGrey;
           isRunning = false;
 
     } else {
@@ -151,20 +159,19 @@ async function insertionSort(){
 
           //====Algorithm implementation====
           let i, key, k, smallestEl;
-          for(i = 1; i < stage.childNodes.length; i++){
-              key = parseInt(stage.childNodes[i].style.height);
+          for(i = 1; i < array.length; i++){
+              key = parseInt(array[i].style.height);
               k = i - 1;
               
-              while( k >= 0 && parseInt(stage.childNodes[k].style.height) > key)
+              while( k >= 0 && parseInt(array[k].style.height) > key)
               {
                   smallestEl = k + 1; 
-                  changeElementColor(smallestEl, yellow);
-                  await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed));
-                  swap(stage.childNodes[smallestEl], stage.childNodes[k])
+                  changeElementColor(smallestEl, yellow, true, 1);
+                  swap(array[smallestEl], array[k])
                   changeElementColor(smallestEl, mintGreen);
                   k -= 1;
               }
-              stage.childNodes[k + 1].style.height = key;
+              array[k + 1].style.height = key;
            }
            isRunning = false;
 
@@ -187,10 +194,19 @@ quickSort = async (low, high) => {
         await this.quickSort(partitionIndex + 1, high);
     }
     isRunning = false;
+    // grey out sorted portion of array
+    for(let i = 0; i <= high; i++){
+        changeElementColor(i, lightGrey);
+    }
 }
 
 async function partition(low, high){
-    let pivot = parseInt(stage.childNodes[high].style.height);
+    //grey out sorted portion of array
+    for(let i = 0; i < low; i++){
+        changeElementColor(i, lightGrey);
+    }
+    // algorithm implementation
+    let pivot = parseInt(array[high].style.height);
     //  [0]or[?]            [n]=pivot
     let i = (low - 1);
     
@@ -200,14 +216,12 @@ async function partition(low, high){
         //is moved to the beginning of the array.
         changeElementColor(high, "red");
         changeElementColor(low, "#00FFF4");
-        if(parseInt(stage.childNodes[j].style.height) < pivot){ 
+        if(parseInt(array[j].style.height) < pivot){ 
             //for every element smaller than the pivot, i increases by 1   
             i++;
-            changeElementColor(j, yellow);
-            await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed * 3));
-            swap(stage.childNodes[i], stage.childNodes[j]);
-            changeElementColor(i, darkYellow);
-            await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed));
+            changeElementColor(j, yellow, true, 3);
+            swap(array[i], array[j]);
+            changeElementColor(i, darkYellow, true, 1);
             changeElementColor(i, mintGreen);
             changeElementColor(j, mintGreen);
         }
@@ -216,8 +230,8 @@ async function partition(low, high){
 
 
     }
-    await new Promise(resolve => setTimeout(() => {resolve()}, animSpeed * 3));
-    swap(stage.childNodes[i + 1], stage.childNodes[high]);;
+    await pauseAnimation(animSpeed * 3);
+    swap(array[i + 1], array[high]);;
     return (i + 1);
 
 }
@@ -237,9 +251,17 @@ function swap(el1, el2){
     el2.style.height = transform1;
 }
 
- function changeElementColor(element, color){
-    stage.childNodes[element].style.background = color;
+async function pauseAnimation(time){
+    return new Promise(resolve => setTimeout(() => {resolve()}, time));
 }
+
+async function changeElementColor(element, color, hasAnim, animSpeedMagnifier){
+    array[element].style.background = color;
+    if(hasAnim){
+        return new Promise(resolve => setTimeout(() => {resolve()}, animSpeed * animSpeedMagnifier));
+    } else { return; }
+}
+
 
 
 function displayLegend(sortFunction){
@@ -284,7 +306,7 @@ async function displayErrorMessage(error){
     switch(error){
         case "isRunning":
             errormsg.style.opacity = '1';
-            await new Promise(resolve => setTimeout(() => {resolve()}, 5000));
+            await pauseAnimation(5000);
             errormsg.style.opacity = '0';
             break;
     }
