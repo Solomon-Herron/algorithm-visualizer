@@ -1,21 +1,21 @@
 //==DOM OBJECTS==
-let stage = document.querySelector('#stage');
-let array = stage.childNodes;
-let getnewArraybtn = document.querySelector('#new-array');
-let slider = document.querySelector('#myRange');
-let bubblesort = document.querySelector('#bubblesort-btn');
-let selectionsort =  document.querySelector('#selectionsort-btn');
-let insertionsort =  document.querySelector('#insertionsort-btn');
-let quicksort = document.querySelector('#quicksort-btn');
-let mergesort = document.querySelector('#mergesort-btn');
-let errormsg = document.querySelector('#errormsg');
+const stage = document.querySelector('#stage');
+const array = stage.childNodes;
+const getnewArraybtn = document.querySelector('#new-array');
+const slider = document.querySelector('#myRange');
+const bubblesort = document.querySelector('#bubblesort-btn');
+const selectionsort =  document.querySelector('#selectionsort-btn');
+const insertionsort =  document.querySelector('#insertionsort-btn');
+const quicksort = document.querySelector('#quicksort-btn');
+const mergesort = document.querySelector('#mergesort-btn');
+const errormsg = document.querySelector('#errormsg');
 
 
 //==ACTUAL INITIALIZATION VARIABLES==
-let yellow = "var(--yellow)"; 
-let mintGreen = "var(---mint-green)";  
-let lightGrey = "var(--light-grey)";     
-let darkYellow = "var(--darkyellow)";
+const yellow = "var(--yellow)"; 
+const mintGreen = "var(---mint-green)";  
+const lightGrey = "var(--light-grey)";     
+const darkYellow = "var(--darkyellow)";
 // isRunning declared as global so every button in the
 // options bar can access the current 'running' status
 // and block their own execution accordingly
@@ -35,7 +35,7 @@ quicksort.addEventListener("click", async () =>{
     if(stage.children[0] === undefined){ return }        
     if(!isRunning){                                                        
         displayLegend("quickSort");
-        let high = stage.childNodes.length - 1;
+        let high = array.length - 1;
         let low = 0;
         await quickSort(low, high);
     } else {
@@ -62,9 +62,7 @@ slider.addEventListener("mouseup", async ()=>{
 
 
 //====================
-
 //===SORT FUNCTIONS=== 
-
 //====================
 
 
@@ -80,6 +78,7 @@ async function bubbleSort(){
         let exampleindex = Math.floor(array.length / 2);
         array[exampleindex].style.height = '520px';
 
+        
           //====Algorithm implementation====
           let n = array.length;
           for (let i = 0; i < n-1; i++){  // for each array element
@@ -118,6 +117,7 @@ async function selectionSort(){
         isRunning = true;
         displayLegend("selectionSort");
 
+    
         //====Algorithm implementation====
           let indexOfMin, i, k;
           for(i = 0; i < array.length - 1; i++){
@@ -131,14 +131,14 @@ async function selectionSort(){
                   }                                                                     // the element at the END of the SORTED portion of the array. 
               } 
 
-              changeElementColor(indexOfMin, yellow, true, 3);
+              await changeElementColor(indexOfMin, yellow, true, 3);
               swap(array[indexOfMin], array[i]);
-              changeElementColor(i, darkYellow, true, 1);
+              await changeElementColor(i, darkYellow, true, 1);
               
               for(let p = 0; p < i; p++){
                   changeElementColor(p, lightGrey);
               }
-              changeElementColor(indexOfMin, mintGreen);
+              await changeElementColor(indexOfMin, mintGreen);
         
           }
           array[array.length - 1].style.background = lightGrey;
@@ -166,9 +166,9 @@ async function insertionSort(){
               while( k >= 0 && parseInt(array[k].style.height) > key)
               {
                   smallestEl = k + 1; 
-                  changeElementColor(smallestEl, yellow, true, 1);
+                  await changeElementColor(smallestEl, yellow, true, 1);
                   swap(array[smallestEl], array[k])
-                  changeElementColor(smallestEl, mintGreen);
+                  await changeElementColor(smallestEl, mintGreen);
                   k -= 1;
               }
               array[k + 1].style.height = key;
@@ -214,16 +214,16 @@ async function partition(low, high){
         //on each pass, a section of the array is traversed,
         //any element shorter in height than pivot (on first pass this is [n-1])
         //is moved to the beginning of the array.
-        changeElementColor(high, "red");
-        changeElementColor(low, "#00FFF4");
+        await changeElementColor(high, "red");
+        await changeElementColor(low, "#00FFF4");
         if(parseInt(array[j].style.height) < pivot){ 
             //for every element smaller than the pivot, i increases by 1   
             i++;
-            changeElementColor(j, yellow, true, 3);
+            await changeElementColor(j, yellow, true, 3);
             swap(array[i], array[j]);
-            changeElementColor(i, darkYellow, true, 1);
-            changeElementColor(i, mintGreen);
-            changeElementColor(j, mintGreen);
+            await changeElementColor(i, darkYellow, true, 1);
+            await changeElementColor(i, mintGreen);
+            await changeElementColor(j, mintGreen);
         }
         changeElementColor(high, mintGreen); //green
         changeElementColor(low, mintGreen);
