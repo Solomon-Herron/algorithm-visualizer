@@ -23,6 +23,8 @@ let bars = document.querySelector("#bars");
 let welcomebtn = document.querySelector('#welcome-btn');
 let loginmenu = document.querySelector('#login-box');
 let i = 0;
+
+
 welcomebtn.addEventListener("click", async ()=>{
     welcomebtn.innerHTML = " ";
     welcomebtn.style.boxShadow = 'none';
@@ -36,7 +38,7 @@ welcomebtn.addEventListener("click", async ()=>{
         let size = k * (Math.random() * 100);
         bars.children[k].style.width = size + 'px';
     }
-    while(true){
+    while( true){
         await new Promise(resolve => setTimeout(() => {resolve()}, 100));
         let size = i * (Math.random() * 100);
         bars.children[i].style.width = size + 'px';

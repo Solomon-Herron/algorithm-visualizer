@@ -9,6 +9,8 @@ const insertionsort =  document.querySelector('#insertionsort-btn');
 const quicksort = document.querySelector('#quicksort-btn');
 const mergesort = document.querySelector('#mergesort-btn');
 const errormsg = document.querySelector('#errormsg');
+// const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+// const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
 
 
 //==ACTUAL INITIALIZATION VARIABLES==

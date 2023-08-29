@@ -1,1 +1,12 @@
-add some classes 
+- i'd rename docs to something like media or assets, i thought that was documentation at first but it seems to be project media
+- i would change this from an arrow function to a traditional function to keep consistent with the rest of the code https://github.com/Solomon-Herron/algorithm-visualizer/blob/main/public/index.js#L188
+- there's probably a better way to do this https://github.com/Solomon-Herron/algorithm-visualizer/blob/main/views/login.html#L21
+one way is if you're using a templating engine, you can do something like (note: not the exact syntax, just an example):
+{% for i=0 to 10 %}
+    <div class="bar"></div>
+{% end %}
+
+- don't push commented code to github, the TODO is fine tho https://github.com/Solomon-Herron/algorithm-visualizer/blob/main/public/index.js#L343 https://github.com/Solomon-Herron/algorithm-visualizer/blob/main/app.js#L35
+if you're still testing changes do it in a different branch or something instead of pushing commented out code to the main branch
+- instead of keeping track of what features need to be done in a text file, look into using github projects (notion/trello/etc works fine too if you prefer that) https://github.com/Solomon-Herron/algorithm-visualizer/blob/main/notepad.txt
+- looks like this loop doesn't break, could be an issue if that welcome button is clicked repeatedly https://github.com/Solomon-Herron/algorithm-visualizer/blob/main/public/login.js#L39
