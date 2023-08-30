@@ -111,7 +111,11 @@ input{
     transition: width .2s;
     background-color: var(---mint-green);
 }
-#enter{
-    margin: 20px;
-    margin-top: 0px;
+.enter{
+    text-align: center;
+    margin-top: 20%;
+}
+
+#enter {
+    padding: 30px;
 }
