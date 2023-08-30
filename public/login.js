@@ -17,8 +17,8 @@ t1.add({
 
 
 
-let submitbtn = document.querySelector("#submitbutton");
-submitbtn.addEventListener("click", ()=> stop = false);
+// let submitbtn = document.querySelector("#submitbutton");
+// submitbtn.addEventListener("click", ()=> stop = false);
 let bars = document.querySelector("#bars");
 let welcomebtn = document.querySelector('#welcome-btn');
 let loginmenu = document.querySelector('#login-box');
