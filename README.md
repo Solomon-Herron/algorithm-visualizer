@@ -1,6 +1,6 @@
 ![logo](/docs/logo.png)
 
-<!---[![App](https://img.shields.io/badge/Live%20App-heroku-purple?style=for-the-badge)](http://sherron-algorithm-visualizer.herokuapp.com/)--->
+[![App](https://img.shields.io/badge/Live%20App-heroku-purple?style=for-the-badge)](http://algorithm-visualizersh.azurewebsites.com/) 
 
 ![Demo](/docs/project-demo.gif)
 
